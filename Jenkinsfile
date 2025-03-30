@@ -11,7 +11,7 @@ pipeline {
                 if ! command -v poetry &> /dev/null; then
                     curl -sSL https://install.python-poetry.org | python3 -
                     echo "export PATH=$HOME/.local/bin:$PATH" >> ~/.bashrc
-                    source ~/.bashrc
+                    . ~/.bashrc
                 fi
                 
                 # Configurar Poetry para criar .venv no projeto
