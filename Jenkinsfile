@@ -10,7 +10,11 @@ pipeline {
                 echo "Build..."
                 script {
                     sh "git branch"
-                    app = docker.build("etl:${env.APP_BUILD_ID}", "--network=host -f Dockerfile .")
+                    try {
+                        app = docker.build("etl:${env.APP_BUILD_ID}", "--network=host -f Dockerfile .")
+                    } catch(err){
+                        throw err
+                    }
                 }
             }
         }
