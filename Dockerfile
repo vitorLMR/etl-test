@@ -19,6 +19,7 @@ RUN apt-get update -y && \
     apt-get -y install procps && \
     apt-get -y install python3-dev && \
     apt-get -y install libpq-dev gcc && \
+    apt-get -y install openjdk-11-jdk && \
     pip3 install psycopg2 && \
     rm -rf /var/lib/apt/lists/* && \
     mkdir $SERVICE_HOME
