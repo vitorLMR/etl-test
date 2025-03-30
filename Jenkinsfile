@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        POETRY_VIRTUALENVS_IN_PROJECT = "true"  // Força a criação do .venv na pasta do projeto
+        POETRY_VIRTUALENVS_IN_PROJECT = "false"  // Força a criação do .venv na pasta do projeto
     }
     stages {
         stage('Setup Environment') {
@@ -14,11 +14,10 @@ pipeline {
                     . ~/.bashrc
                 fi
                 
-                # Configurar Poetry para criar .venv no projeto
-                poetry config virtualenvs.in-project true
+                poetry config virtualenvs.in-project false
                 
-                # Instalar dependências
-                poetry install --no-interaction
+                poetry export -f requirements.txt --without-hashes > requirements.txt
+                pip install -r requirements.txt
                 '''
             }
         }
