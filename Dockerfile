@@ -21,7 +21,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     build-essential \
 || { echo "apt-get install failed"; exit 1; }
 
-RUN curl -sSL https://install.python-poetry.org | python3 - || { echo "Poetry installation failed"; exit 1; }
+RUN curl -sSL https://install.python-poetry.org | python - || { echo "Poetry installation failed"; exit 1; }
 
 RUN mv /root/.poetry $POETRY_PATH || { echo "Moving Poetry failed"; exit 1; }
 
