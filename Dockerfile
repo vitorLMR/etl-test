@@ -18,12 +18,12 @@ RUN apt-get update -y && \
     apt-get -y install telnet && \
     apt-get -y install procps && \
     apt-get -y install python3-dev && \
-    apt-get -y install libpq-dev gcc && \
-    apt-get -y install openjdk-11-jdk && \
+    apt-get -y install libpq-dev gcc &&  \
     pip3 install psycopg2 && \
     rm -rf /var/lib/apt/lists/* && \
     mkdir $SERVICE_HOME
 
+RUN apt-get -y install openjdk-11-jdk
 # where your code lives
 WORKDIR $SERVICE_HOME
 
