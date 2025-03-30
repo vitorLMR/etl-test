@@ -23,7 +23,7 @@ pipeline {
                 echo "RUN..."
                 script {
                     try {
-                        sh "docker run --network=host -v ~/Development:/output etl:${env.APP_BUILD_ID} python3 src/etl/extract.py"
+                        sh "docker run --network=host -v ~/Development:/output etl:${env.APP_BUILD_ID} poetry run python3 src/etl/extract.py"
                     } catch(err) {
                         throw err
                     } finally {
