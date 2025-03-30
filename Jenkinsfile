@@ -32,23 +32,55 @@ pipeline {
             }
         }
         stage('Transform (Leading)') {
-            steps {
-                sh 'python3 src/etl/transform_leading.py'
+            steps{
+                echo "RUN..."
+                script {
+                    try {
+                        sh "docker run --network=host -v ~/Development:/output etl:${env.APP_BUILD_ID} poetry run python3 src/etl/transform_leading.py"
+                    } catch(err) {
+                        throw err
+                    } finally {
+                    }
+                }
             }
         }
         stage('Transform (Bronze)') {
-            steps {
-                sh 'python3 src/etl/transform_bronze.py'
+            steps{
+                echo "RUN..."
+                script {
+                    try {
+                        sh "docker run --network=host -v ~/Development:/output etl:${env.APP_BUILD_ID} poetry run python3 src/etl/transform_bronze.py"
+                    } catch(err) {
+                        throw err
+                    } finally {
+                    }
+                }
             }
         }
         stage('Transform (Silver)') {
-            steps {
-                sh 'python3 src/etl/transform_silver.py'
+            steps{
+                echo "RUN..."
+                script {
+                    try {
+                        sh "docker run --network=host -v ~/Development:/output etl:${env.APP_BUILD_ID} poetry run python3 src/etl/transform_silver.py"
+                    } catch(err) {
+                        throw err
+                    } finally {
+                    }
+                }
             }
         }
-        stage('Load') {
-            steps {
-                sh 'python3 src/etl/load.py'
+        stage('Transform (Silver)') {
+            steps{
+                echo "RUN..."
+                script {
+                    try {
+                        sh "docker run --network=host -v ~/Development:/output etl:${env.APP_BUILD_ID} poetry run python3 src/etl/load.py"
+                    } catch(err) {
+                        throw err
+                    } finally {
+                    }
+                }
             }
         }
     }
