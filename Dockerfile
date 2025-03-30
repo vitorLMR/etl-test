@@ -33,7 +33,7 @@ RUN pip3 install poetry && \
     poetry config virtualenvs.create false
 
 # run this command to install all dependencies
-RUN poetry lock --no-update 
+RUN poetry lock 
 RUN poetry install
 
 EXPOSE 8000
