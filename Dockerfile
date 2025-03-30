@@ -1,4 +1,4 @@
-FROM python:3.11.4-slim
+FROM python:3.12.3-slim
 
 # setup environment variable
 ENV SERVICE_HOME=/usr/src/application \
