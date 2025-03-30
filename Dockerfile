@@ -23,7 +23,8 @@ RUN apt-get update -y && \
     rm -rf /var/lib/apt/lists/* && \
     mkdir $SERVICE_HOME
 
-RUN apt-get -y install openjdk-11-jdk
+RUN apt-get -y install openjdk-8-jdk
+ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
 # where your code lives
 WORKDIR $SERVICE_HOME
 
