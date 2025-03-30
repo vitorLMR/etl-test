@@ -18,6 +18,7 @@ RUN apt-get update -y && \
     apt-get -y install telnet && \
     apt-get -y install procps && \
     apt-get -y install python3-dev && \
+    apt-get remove libpq5 && \
     apt-get -y install libpq-dev && \
     rm -rf /var/lib/apt/lists/* && \
     mkdir $SERVICE_HOME
