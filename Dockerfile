@@ -26,7 +26,7 @@ WORKDIR $SERVICE_HOME
 # copy whole project to your docker home directory.
 COPY . .
 
-RUN echo "Listando arquivos em /app:" && ls -alh /app
+RUN echo "Listando arquivos em /app:" && ls -alh
 
 # Install poetry: Version 1.4.1 of the incompatibility with debufy
 RUN pip3 install poetry==1.4.0 && \
