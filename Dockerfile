@@ -1,4 +1,4 @@
-FROM public.ecr.aws/docker/library/python:3.11.4-slim-bullseye
+FROM python:3.11.4-slim
 
 # setup environment variable
 ENV SERVICE_HOME=/usr/src/application \
@@ -7,11 +7,16 @@ ENV SERVICE_HOME=/usr/src/application \
     PIP_NO_CACHE_DIR=off \
     PIP_DISABLE_PIP_VERSION_CHECK=on \
     PIP_DEFAULT_TIMEOUT=100 \
-    MODE=PROD
+    PYDEVD_DISABLE_FILE_VALIDATION=1 \
+    -Xfrozen_modules=off \
+    MODE=DEV
 
-RUN apt-get update -y &&  \
-    apt-get upgrade -y &&  \
-    apt-get -y install netcat && \
+
+RUN apt-get update -y && \
+    apt-get upgrade -y && \
+    apt-get -y install make && \
+    apt-get -y install telnet && \
+    apt-get -y install procps && \
     rm -rf /var/lib/apt/lists/* && \
     mkdir $SERVICE_HOME
 
@@ -21,12 +26,13 @@ WORKDIR $SERVICE_HOME
 # copy whole project to your docker home directory.
 COPY . .
 
-# Install poetry:
-RUN pip3 install poetry && \
+# Install poetry: Version 1.4.1 of the incompatibility with debufy
+RUN pip3 install poetry==1.4.0 && \
     poetry config virtualenvs.create false
 
 # run this command to install all dependencies
-RUN poetry lock --no-update && \
-    poetry install --without dev
+RUN poetry lock --no-update 
+RUN poetry install
 
 EXPOSE 8000
+
