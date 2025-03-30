@@ -29,10 +29,11 @@ COPY . .
 RUN echo "Listando arquivos em /app:" && ls -alh
 
 # Install poetry: Version 1.4.1 of the incompatibility with debufy
-RUN pip3 install poetry==1.4.0 && \
+RUN pip3 install poetry && \
     poetry config virtualenvs.create false
 
 # run this command to install all dependencies
+RUN poetry lock --no-update 
 RUN poetry install
 
 EXPOSE 8000
