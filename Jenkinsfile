@@ -8,11 +8,7 @@ pipeline {
             steps {
                 sh '''
                 # Instalar Poetry se não existir
-                if ! command -v poetry &> /dev/null; then
-                    curl -sSL https://install.python-poetry.org | python3 -
-                    echo "export PATH=$HOME/.local/bin:$PATH" >> ~/.bashrc
-                    . ~/.bashrc
-                fi
+                pip3 install poetry==1.4.0
                 
                 poetry config virtualenvs.in-project false
                 
