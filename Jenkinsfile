@@ -24,7 +24,7 @@ pipeline {
         }
         stage('Extract') {
             steps {
-                sh 'python3 src/etl/extract.py'
+                sh 'poetry run python src/etl/extract.py'
             }
         }
         stage('Transform (Leading)') {
