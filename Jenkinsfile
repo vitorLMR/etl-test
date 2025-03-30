@@ -18,7 +18,7 @@ pipeline {
                 
                 poetry install --no-interaction
 
-                source $(poetry env info --path)/bin/activate
+                . $(poetry env info --path)/bin/activate
                 '''
             }
         }
