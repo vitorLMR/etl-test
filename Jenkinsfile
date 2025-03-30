@@ -1,30 +1,22 @@
 pipeline {
     agent any
     environment {
-        POETRY_VIRTUALENVS_IN_PROJECT = "true"  // Força a criação do .venv na pasta do projeto
+        POETRY_VIRTUALENVS_IN_PROJECT = "true"
+        APP_BUILD_ID = 0.1  // Força a criação do .venv na pasta do projeto
     }
     stages {
-        stage('Setup Environment') {
-            steps {
-                sh '''
-                # Instalar Poetry se não existir
-                if ! command -v poetry &> /dev/null; then
-                    curl -sSL https://install.python-poetry.org | python3 -
-                    echo "export PATH=$HOME/.local/bin:$PATH" >> ~/.bashrc
-                    . ~/.bashrc
-                fi
-                
-                poetry config virtualenvs.in-project true
-                
-                poetry install --no-interaction
-
-                . $(poetry env info --path)/bin/activate
-                '''
+         stage('Build') {
+            steps{
+                echo "Build..."
+                script {
+                    sh "git branch"
+                    app = docker.build("etl:${env.APP_BUILD_ID}", "--network=host -f Dockerfile .")
+                }
             }
         }
         stage('Extract') {
             steps {
-                sh 'poetry run python src/etl/extract.py'
+                sh "docker run --network=host -v ~/Development:/output etl:${env.APP_BUILD_ID} python3 src/etl/extract.py"
             }
         }
         stage('Transform (Leading)') {
