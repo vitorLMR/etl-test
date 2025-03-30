@@ -70,7 +70,7 @@ pipeline {
                 }
             }
         }
-        stage('Transform (Silver)') {
+        stage('Load') {
             steps{
                 echo "RUN..."
                 script {
