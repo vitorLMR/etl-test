@@ -15,8 +15,16 @@ pipeline {
             }
         }
         stage('Extract') {
-            steps {
-                sh "docker run --network=host -v ~/Development:/output etl:${env.APP_BUILD_ID} python3 src/etl/extract.py"
+            steps{
+                echo "RUN..."
+                script {
+                    try {
+                        sh "docker run --network=host -v ~/Development:/output etl:${env.APP_BUILD_ID} python3 src/etl/extract.py"
+                    } catch(err) {
+                        throw err
+                    } finally {
+                    }
+                }
             }
         }
         stage('Transform (Leading)') {
