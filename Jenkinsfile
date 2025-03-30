@@ -17,6 +17,8 @@ pipeline {
                 poetry config virtualenvs.in-project false
                 
                 poetry install --no-interaction
+
+                source $(poetry env info --path)/bin/activate
                 '''
             }
         }
