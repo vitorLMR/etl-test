@@ -1,7 +1,7 @@
 [project]
 name = "etl"
 version = "0.1.0"
-description = ""
+description = "ETL"
 authors = [
     {name = "Vitor",email = "vitor.rosa@innovaconnect.com.br"}
 ]
