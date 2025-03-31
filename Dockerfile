@@ -25,7 +25,7 @@ RUN apt-get update -y && \
     mkdir $SERVICE_HOME
 
 RUN apt update -y && apt-get install -y software-properties-common && \
-    apt-add-repository 'deb http://security.debian.org/debian-security stretch/updates main' && apt update -y && \
+    apt-add-repository ppa:openjdk-r/ppa && apt update -y && \
     apt-get install -y openjdk-8-jdk-headless && \
     export JAVA_HOME && \
     apt-get clean
