@@ -27,7 +27,6 @@ RUN apt-get update -y && \
 RUN apt update -y && apt-get install -y software-properties-common && \
     apt-add-repository 'deb http://security.debian.org/debian-security stretch/updates main' && apt update -y && \
     apt-get install -y openjdk-8-jdk-headless && \
-    pip install --no-cache-dir -r requirements.txt && \
     export JAVA_HOME && \
     apt-get clean
 # where your code lives
