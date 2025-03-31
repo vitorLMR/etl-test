@@ -29,6 +29,7 @@ RUN mkdir -p /usr/share/man/man1 /usr/share/man/man2 && \
     apt-get install -y python3-launchpadlib && \
     apt-get install -y software-properties-common && \
     add-apt-repository ppa:openjdk-r/ppa && \
+    apt-get update && \
     apt-get install -y --no-install-recommends openjdk-11-jdk && \
     apt-get install ca-certificates-java -y && \
     apt-get clean && \
