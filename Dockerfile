@@ -24,9 +24,12 @@ RUN apt-get update -y && \
     rm -rf /var/lib/apt/lists/* && \
     mkdir $SERVICE_HOME
 
-RUN add-apt-repository ppa:webupd8team/java
-RUN apt-get -y install openjdk-8-jdk
-ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
+RUN add-apt-repository ppa:openjdk-r/ppa && \
+    apt-get update && \
+    apt-get install -y openjdk-11-jdk && \
+    apt-get install -y ant && \
+    apt-get clean;
+ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64/
 # where your code lives
 WORKDIR $SERVICE_HOME
 
