@@ -9,7 +9,8 @@ ENV SERVICE_HOME=/usr/src/application \
     PIP_DEFAULT_TIMEOUT=100 \
     PYDEVD_DISABLE_FILE_VALIDATION=1 \
     -Xfrozen_modules=off \
-    MODE=DEV
+    MODE=DEV \
+    JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
 
 
 RUN apt-get update -y && \
@@ -23,7 +24,12 @@ RUN apt-get update -y && \
     rm -rf /var/lib/apt/lists/* && \
     mkdir $SERVICE_HOME
 
-RUN apt-get install -y openjdk-11-jre-headless
+RUN apt update -y && apt-get install -y software-properties-common && \
+    apt-add-repository 'deb http://security.debian.org/debian-security stretch/updates main' && apt update -y && \
+    apt-get install -y openjdk-8-jdk-headless && \
+    pip install --no-cache-dir -r requirements.txt && \
+    export JAVA_HOME && \
+    apt-get clean
 # where your code lives
 WORKDIR $SERVICE_HOME
 
