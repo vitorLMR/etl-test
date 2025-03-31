@@ -10,7 +10,7 @@ ENV SERVICE_HOME=/usr/src/application \
     PYDEVD_DISABLE_FILE_VALIDATION=1 \
     -Xfrozen_modules=off \
     MODE=DEV \
-    JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
+    JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/
 
 
 RUN apt-get update -y && \
@@ -24,11 +24,12 @@ RUN apt-get update -y && \
     rm -rf /var/lib/apt/lists/* && \
     mkdir $SERVICE_HOME
 
-RUN apt update -y && apt-get install -y software-properties-common && \
-    apt-add-repository ppa:openjdk-r/ppa && apt update -y && \
-    apt-get install -y openjdk-8-jdk-headless && \
-    export JAVA_HOME && \
-    apt-get clean
+RUN mkdir -p /usr/share/man/man1 /usr/share/man/man2 && \
+    apt-get update &&\
+    apt-get install -y --no-install-recommends openjdk-11-jre && \
+    apt-get install ca-certificates-java -y && \
+    apt-get clean && \
+    update-ca-certificates -f;
 # where your code lives
 WORKDIR $SERVICE_HOME
 
