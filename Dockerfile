@@ -23,9 +23,7 @@ RUN apt-get update -y && \
     rm -rf /var/lib/apt/lists/* && \
     mkdir $SERVICE_HOME
 
-RUN apt-get update && \
-    apt-get install -y openjdk-11-jre-headless && \
-    apt-get clean;
+RUN apt-get install -y openjdk-11-jre-headless
 # where your code lives
 WORKDIR $SERVICE_HOME
 
