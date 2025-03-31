@@ -23,12 +23,9 @@ RUN apt-get update -y && \
     rm -rf /var/lib/apt/lists/* && \
     mkdir $SERVICE_HOME
 
-RUN add-apt-repository ppa:openjdk-r/ppa && \
-    apt-get update && \
-    apt-get install -y openjdk-11-jdk && \
-    apt-get install -y ant && \
+RUN apt-get update && \
+    apt-get install -y openjdk-11-jre-headless && \
     apt-get clean;
-ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64/
 # where your code lives
 WORKDIR $SERVICE_HOME
 
