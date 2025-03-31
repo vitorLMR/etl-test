@@ -9,8 +9,7 @@ ENV SERVICE_HOME=/usr/src/application \
     PIP_DEFAULT_TIMEOUT=100 \
     PYDEVD_DISABLE_FILE_VALIDATION=1 \
     -Xfrozen_modules=off \
-    MODE=DEV \
-    JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/
+    MODE=DEV
 
 
 RUN apt-get update -y && \
