@@ -70,12 +70,12 @@ pipeline {
                 }
             }
         }
-        stage('Load') {
+        stage('Transform (Gold)') {
             steps{
                 echo "RUN..."
                 script {
                     try {
-                        sh "docker run --network=host -v ~/Development:/output etl:${env.APP_BUILD_ID} poetry run python3 src/etl/load.py"
+                        sh "docker run --network=host -v ~/Development:/output etl:${env.APP_BUILD_ID} poetry run python3 src/etl/transform_gold.py"
                     } catch(err) {
                         throw err
                     } finally {

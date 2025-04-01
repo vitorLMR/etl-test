@@ -11,7 +11,7 @@ class DataFrameWithTableName(TypedDict):
     data_frame: DataFrame
 
 base_postgres_url = "jdbc:postgresql://host:port/name"
-class LoadPipe:
+class GoldTransformPipe:
     def __init__(self, spark: Any):
         self.__spark = spark
         self.__config = Config()
