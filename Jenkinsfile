@@ -83,5 +83,18 @@ pipeline {
                 }
             }
         }
+        stage('CLEAN UP') {
+            steps{
+                echo "CLEAN UP..."
+                script {
+                    try {
+                        sh "docker rm \$(docker stop \$(docker ps -a -q --filter ancestor=etl:${APP_BUILD_ID} --format='{{.ID}}'))"
+                    } catch(err) {
+                        throw err
+                    } finally {
+                    }
+                }
+            }
+        }
     }
 }
