@@ -22,5 +22,5 @@ class View:
                 """
     def get_query_to_delete(self):
         return f"""
-                    DELETE VIEW IF EXISTS {self.name}
+                    DROP VIEW IF EXISTS {self.name}
                 """
