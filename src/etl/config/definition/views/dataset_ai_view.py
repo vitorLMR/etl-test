@@ -53,5 +53,5 @@ class DefineDatasetAiView(DefineView):
         return map(list(lambda product: product[0]),rows)
 
 class DatasetAiView(View):
-    def __init__(self,):
-        super().__init__("VW_DATASET_AI", None, DefineDatasetAiView())
+    def __init__(self,env:Env):
+        super().__init__("VW_DATASET_AI", None, DefineDatasetAiView(env))
