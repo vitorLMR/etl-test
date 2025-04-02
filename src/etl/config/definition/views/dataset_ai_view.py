@@ -21,7 +21,7 @@ class DefineDatasetAiView(DefineView):
                         {fields},
                         (
                         CASE
-                            WHEN ANY(array_agg(product.code)) = '{code}' THEN 1 ELSE 0
+                            WHEN '{code}' = ANY(array_agg(product.code)) THEN 1 ELSE 0
                         END
                         ) as "{code}"
                         """
@@ -32,7 +32,7 @@ class DefineDatasetAiView(DefineView):
                     inner join fact_user "user" on "user".id = orders.user_id
                     inner join fact_address address on address.id = orders.address_id
                     inner join fact_product product on product.id = orders.product_id
-                    group by "user".email, address.uf, address.city,product.code
+                    group by "user".email, address.uf, address.city
                   """
         print(select)
         return select
