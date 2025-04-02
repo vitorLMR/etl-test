@@ -13,7 +13,7 @@ class DefineDatasetAiView(DefineView):
         fields = """
                     "user".email as email,
                     address.uf as uf,
-                    address.city as city,
+                    address.city as city
                     """
         
         for code in products_code:
@@ -21,9 +21,9 @@ class DefineDatasetAiView(DefineView):
                         {fields},
                         (
                         CASE
-                            WHEN product.code = '{code}' THEN 1 ELSE 0
+                            WHEN ANY(array_agg(product.code)) = '{code}' THEN 1 ELSE 0
                         END
-                        ) as {code}
+                        ) as "{code}"
                         """
         select = f"""
                     SELECT 
@@ -32,9 +32,10 @@ class DefineDatasetAiView(DefineView):
                     inner join fact_user "user" on "user".id = orders.user_id
                     inner join fact_address address on address.id = orders.address_id
                     inner join fact_product product on product.id = orders.product_id
-                    group by "user".email, address.uf, address.city
+                    group by "user".email, address.uf, address.city,product.code
                   """
-        pass
+        print(select)
+        return select
 
     def get_products(self) -> list[str]:
         conn = psycopg2.connect(
@@ -49,8 +50,10 @@ class DefineDatasetAiView(DefineView):
 
         # Pegando os resultados
         rows = cur.fetchall()
-
-        return map(list(lambda product: product[0]),rows)
+        products:list[str] = []
+        for row in rows:
+            products.append(row[0])
+        return products
 
 class DatasetAiView(View):
     def __init__(self,env:Env):
