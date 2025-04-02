@@ -2,13 +2,15 @@ import re
 from pyspark.sql.dataframe import DataFrame
 
 from config.definition.query_database_main import QueryDatabaseMain
-from config.definition.transformation_to_dimensional_database import TransformationToDimensionalDatabase
+from config.definition.config_dimensional_tables import ConfigDimensionalTables
+from config.definition.config_views import ConfigViews
 
 class Config:
     def __init__(self):
         self.__query = QueryDatabaseMain.query
         self.__columns = re.findall(r'as (\w+)', self.__query)
-        self.__transform_dimensional = TransformationToDimensionalDatabase()
+        self.__transform_dimensional = ConfigDimensionalTables()
+        self.__config_views = ConfigViews()
         pass
     def get_query_to_get_data_in_database_main(self):
         """Buscar query que será responsável pela busca de dados no banco de dados principal"""
@@ -36,3 +38,7 @@ class Config:
     def get_dim_table(self):
         """Buscar tabela dimensional"""
         return self.__transform_dimensional.get_dim_table_data()
+    
+    def get_views(self):
+        """Buscar views da base de dados dimensional"""
+        return self.__config_views.get_views()

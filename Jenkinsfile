@@ -83,6 +83,19 @@ pipeline {
                 }
             }
         }
+        stage('Load') {
+            steps{
+                echo "RUN..."
+                script {
+                    try {
+                        sh "docker run --network=host -v ~/Development:/output etl:${env.APP_BUILD_ID} poetry run python3 src/etl/load.py"
+                    } catch(err) {
+                        throw err
+                    } finally {
+                    }
+                }
+            }
+        }
         stage('CLEAN UP') {
             steps{
                 echo "CLEAN UP..."

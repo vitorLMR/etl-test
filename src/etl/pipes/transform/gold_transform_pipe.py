@@ -33,6 +33,7 @@ class GoldTransformPipe:
     def execute(self):
         dimensional_tables = self.__get_dimensional_tables_names()
         data_frames = self.__read_delta_files_and_create_data_frames(dimensional_tables)
+        self.__delete_views()
         self.__delete_dimensional_tables()
         self.__create_dimensional_tables(data_frames)
         self.__create_primary_keys_into_fact_tables()
@@ -56,6 +57,23 @@ class GoldTransformPipe:
                 }
             )
         return data_frames
+
+    def __delete_views(self):
+        """Deletar views"""
+        views = self.__config.get_views()
+        conn = psycopg2.connect(
+                dbname=self.__env.database_dim.name,
+                user=self.__env.database_dim.user,
+                password=self.__env.database_dim.password,
+                host=self.__env.database_dim.host,
+                port=self.__env.database_dim.port
+            )
+        cursor = conn.cursor()
+
+        for view in views:
+            cursor.execute(view.get_query_to_delete())
+            conn.commit()
+        conn.close()
 
     def __delete_dimensional_tables(self):
         """Limpar tabelas dimensionais para a nova importação"""

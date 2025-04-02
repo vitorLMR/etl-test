@@ -1,5 +1,5 @@
 class QueryDatabaseMain:
-    query = """select  
+    query = """select 
                     integrator.cnpj as cnpj_integrator,
                     "user".id as user_id,
                     "user".email as user_email,
