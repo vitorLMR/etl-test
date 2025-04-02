@@ -4,13 +4,15 @@ from pyspark.sql.dataframe import DataFrame
 from config.definition.query_database_main import QueryDatabaseMain
 from config.definition.config_dimensional_tables import ConfigDimensionalTables
 from config.definition.config_views import ConfigViews
+from core.env.env import Env
 
 class Config:
     def __init__(self):
         self.__query = QueryDatabaseMain.query
         self.__columns = re.findall(r'as (\w+)', self.__query)
         self.__transform_dimensional = ConfigDimensionalTables()
-        self.__config_views = ConfigViews()
+        self.__env = Env()
+        self.__config_views = ConfigViews(self.__env)
         pass
     def get_query_to_get_data_in_database_main(self):
         """Buscar query que será responsável pela busca de dados no banco de dados principal"""
